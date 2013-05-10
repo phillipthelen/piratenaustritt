@@ -1,0 +1,49 @@
+<!doctype>
+<html>
+<head>
+	<title>jsPDF</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+
+
+	<link rel="stylesheet" href="./css/foundation.min.css">
+
+	<script type="text/javascript" src="./js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="./js/foundation.min.js"></script>
+	<script type="text/javascript" src="./js/jspdf.js"></script>
+	<script type="text/javascript" src="./js/libs/Deflate/adler32cs.js"></script>
+	<script type="text/javascript" src="./js/libs/FileSaver.js/FileSaver.js"></script>
+	<script type="text/javascript" src="./js/libs/Blob.js/BlobBuilder.js"></script>
+	
+</head>
+
+<body>
+	<div class="row">
+		<h1>Piratenpartei Austrittsgenerator</h1>
+  <div class="small-12"><div class="panel">
+<input type="text" name="Name"></input>
+</div>
+
+<a href="javascript:renderPDF()">Download</a></div>
+</div>
+
+<script>
+function renderPDF() {
+	var doc = new jsPDF();
+	doc.setFontSize(13);
+	doc.text(27,  53, 'Name');
+	doc.text(27,  61, 'Straße');
+	doc.text(27,  69, 'Stadt');
+
+	doc.setFontSize(16);
+	doc.text(20, 100, 'This is some normal sized text underneath.');
+
+	doc.text(20, 200, 'Gezeichnet');
+	doc.setDrawColor(100,100,100);
+	doc.line(20, 215, 80, 215);
+	doc.text(20, 222, "")
+	doc.save('austritt.pdf');
+}
+</script>
+</body>
+</html>
