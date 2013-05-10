@@ -14,34 +14,198 @@
 	<script type="text/javascript" src="./js/libs/Deflate/adler32cs.js"></script>
 	<script type="text/javascript" src="./js/libs/FileSaver.js/FileSaver.js"></script>
 	<script type="text/javascript" src="./js/libs/Blob.js/BlobBuilder.js"></script>
+	<script type="text/javascript" src="./js/jspdf.plugin.split_text_to_size.js"></script>
+	<script type="text/javascript" src="./js/mustache.js"></script>
 	
 </head>
 
 <body>
-	<div class="row">
+	<div class="row" style="max-width:50em">
 		<h1>Piratenpartei Austrittsgenerator</h1>
   <div class="small-12"><div class="panel">
-<input type="text" name="Name"></input>
+  	<label>Identifizierungsmerkmale</label>
+<div class="row">
+      <div class="large-6 columns">
+        <input type="text" placeholder="Name" id="name">
+      </div>
+      <div class="large-6 columns">
+        <input type="text" placeholder="Mitgliedsnummer (wenn vorhanden)" id="memberid">
+      </div>
+    </div>
+<div class="row">
+      <div class="large-12 columns">
+        <label>Gliederung</label>
+        <select id="organisation">
+        	<option value="0">Bund</option>
+        	<option value="1">Baden-Württemberg</option>
+	<option value="2">Bayern</option>
+	<option value="3">Berlin</option>
+	<option value="4">Brandenburg</option>
+	<option value="5">Bremen</option>
+	<option value="6">Hamburg</option>
+	<option value="7">Hessen</option>
+	<option value="8">Mecklenburg-Vorpommern</option>
+	<option value="9">Niedersachsen</option>
+	<option value="10">Nordrhein-Westfalen</option>
+	<option value="11">Rheinland-Pfalz</option>
+	<option value="12">Saarland</option>
+	<option value="13">Sachsen</option>
+	<option value="14">Sachsen-Anhalt</option>
+	<option value="15">Schleswig-Holstein</option>
+	<option value="16">Thüringen</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="large-12 columns">
+        <label>Austrittsgrund</label>
+        <textarea name="reason" cols="50" rows="10" id="reason"></textarea>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="large-12 columns">
+        <label>Grußformel</label>
+        <select id="valediction">
+        	<option>Mit freundlichen Grüßen,</option>
+        	<option>Mit unfreundlichen Grüßen,</option>
+        	<option>Hochachtungsvoll,</option>
+        	<option></option>
+        	<option></option>
+        	<option></option>
+        </select>
+      </div>
+    </div>
 </div>
 
-<a href="javascript:renderPDF()">Download</a></div>
+<a href="javascript:renderPDF()" class="button success">Download</a></div>
 </div>
 
 <script>
+
+var organisations = {
+	0:{
+		"name":"Piratenpartei Deutschland",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin"
+	},
+	1:{
+		"name":"Piratenpartei Baden Württemberg",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin"
+	},
+	2:{
+		"name":"Piratenpartei Bayern",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin"
+	},
+	3:{
+		"name":"Piratenpartei Berlin",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin"
+	},
+	4:{
+		"name":"Piratenpartei Brandenburg",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin"
+	},
+	5:{
+		"name":"Piratenpartei Bremen",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin"
+	},
+	6:{
+		"name":"Piratenpartei Hamburg",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin"
+	},
+	7:{
+		"name":"Piratenpartei Hessen",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin"
+	},
+	8:{
+		"name":"Piratenpartei Mecklenburg-Vorpommern",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin"
+	},
+	9:{
+		"name":"Piratenpartei Niedersachsen",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin"
+	},
+	10:{
+		"name":"Piratenpartei Nordrhein-Westfalen",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin"
+	},
+	11:{
+		"name":"Piratenpartei Rheinland-Pfalz",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin"
+	},
+	12:{
+		"name":"Piratenpartei Saarland",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin"
+	},
+	13:{
+		"name":"Piratenpartei Sachsen",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin"
+	},
+	14:{
+		"name":"Piratenpartei Sachsen-Anhalt",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin"
+	},
+	15:{
+		"name":"Piratenpartei Schleswig-Holstein",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin"
+	},
+	16:{
+		"name":"Piratenpartei Thüringen",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin"
+	}
+}
+
 function renderPDF() {
+
+	var name= $("#name").val()
+	var memberid= $("#memberid").val()
+	var organisation= $("#organisation").val()
+	var reason= $("#reason").val()
+	var valediction= $("#valediction option:selected").val()
+
+		var view = {
+	  name: name,
+	  memberid: memberid
+	};
+	alert(organisation)
+	if(memberid != "") {
+		var text = Mustache.render("Hiermit beende ich, {{name}} (Mitgliedsnummer: {{memberid}}) meine Mitgliedschaft bei der Piratenpartei Deutschland.", view);
+	} else {
+		var text = Mustache.render("Hiermit beende ich, {{name}} meine Mitgliedschaft bei der Piratenpartei Deutschland.", view);
+	}
+
 	var doc = new jsPDF();
 	doc.setFontSize(13);
-	doc.text(27,  53, 'Name');
-	doc.text(27,  61, 'Straße');
-	doc.text(27,  69, 'Stadt');
+
+	doc.text(27,  53, organisations[organisation]["name"]);
+	doc.text(27,  61, organisations[organisation]["address"]);
+	doc.text(27,  69, organisations[organisation]["city"]);
 
 	doc.setFontSize(16);
-	doc.text(20, 100, 'This is some normal sized text underneath.');
+	lines = doc.splitTextToSize(text, 400)
+	doc.text(20, 100, lines)
 
-	doc.text(20, 200, 'Gezeichnet');
+	doc.text(20, 200, valediction);
 	doc.setDrawColor(100,100,100);
 	doc.line(20, 215, 80, 215);
-	doc.text(20, 222, "")
+	doc.text(20, 222, name)
 	doc.save('austritt.pdf');
 }
 </script>
