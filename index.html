@@ -32,29 +32,12 @@
       <div class="large-6 columns">
         <input type="text" placeholder="Mitgliedsnummer (wenn vorhanden)" id="memberid">
       </div>
-    </div>
-<div class="row">
-      <div class="large-12 columns">
-        <label>Gliederung</label>
-        <select id="organisation">
-        	<option value="0">Bund</option>
-        	<option value="1">Baden-Württemberg</option>
-	<option value="2">Bayern</option>
-	<option value="3">Berlin</option>
-	<option value="4">Brandenburg</option>
-	<option value="5">Bremen</option>
-	<option value="6">Hamburg</option>
-	<option value="7">Hessen</option>
-	<option value="8">Mecklenburg-Vorpommern</option>
-	<option value="9">Niedersachsen</option>
-	<option value="10">Nordrhein-Westfalen</option>
-	<option value="11">Rheinland-Pfalz</option>
-	<option value="12">Saarland</option>
-	<option value="13">Sachsen</option>
-	<option value="14">Sachsen-Anhalt</option>
-	<option value="15">Schleswig-Holstein</option>
-	<option value="16">Thüringen</option>
-        </select>
+
+      <div class="large-6 columns">
+        <input type="text" placeholder="Straße und Hausnummer" id="address">
+      </div>
+      <div class="large-6 columns">
+        <input type="text" placeholder="Stadt und Postleitzahl" id="city">
       </div>
     </div>
 
@@ -75,6 +58,8 @@
         	<option>Enttäuscht,</option>
         	<option>Genervt,</option>
         	<option>Voller Wut,</option>
+        	<option>Mit den gesellschaftlich gebotenen gerade noch freundlichen Grüßen,</option>
+        	<option>Arrrrgh,</option>
         </select>
       </div>
     </div>
@@ -85,99 +70,12 @@
 
 <script>
 
-var organisations = {
-	0:{
-		"name":"Piratenpartei Deutschland",
-		"address":"Pflugstraße 9a",
-		"city":"10115 Berlin"
-	},
-	1:{
-		"name":"Piratenpartei Baden Württemberg",
-		"address":"Pflugstraße 9a",
-		"city":"10115 Berlin"
-	},
-	2:{
-		"name":"Piratenpartei Bayern",
-		"address":"Pflugstraße 9a",
-		"city":"10115 Berlin"
-	},
-	3:{
-		"name":"Piratenpartei Berlin",
-		"address":"Pflugstraße 9a",
-		"city":"10115 Berlin"
-	},
-	4:{
-		"name":"Piratenpartei Brandenburg",
-		"address":"Pflugstraße 9a",
-		"city":"10115 Berlin"
-	},
-	5:{
-		"name":"Piratenpartei Bremen",
-		"address":"Pflugstraße 9a",
-		"city":"10115 Berlin"
-	},
-	6:{
-		"name":"Piratenpartei Hamburg",
-		"address":"Pflugstraße 9a",
-		"city":"10115 Berlin"
-	},
-	7:{
-		"name":"Piratenpartei Hessen",
-		"address":"Pflugstraße 9a",
-		"city":"10115 Berlin"
-	},
-	8:{
-		"name":"Piratenpartei Mecklenburg-Vorpommern",
-		"address":"Pflugstraße 9a",
-		"city":"10115 Berlin"
-	},
-	9:{
-		"name":"Piratenpartei Niedersachsen",
-		"address":"Pflugstraße 9a",
-		"city":"10115 Berlin"
-	},
-	10:{
-		"name":"Piratenpartei Nordrhein-Westfalen",
-		"address":"Pflugstraße 9a",
-		"city":"10115 Berlin"
-	},
-	11:{
-		"name":"Piratenpartei Rheinland-Pfalz",
-		"address":"Pflugstraße 9a",
-		"city":"10115 Berlin"
-	},
-	12:{
-		"name":"Piratenpartei Saarland",
-		"address":"Pflugstraße 9a",
-		"city":"10115 Berlin"
-	},
-	13:{
-		"name":"Piratenpartei Sachsen",
-		"address":"Pflugstraße 9a",
-		"city":"10115 Berlin"
-	},
-	14:{
-		"name":"Piratenpartei Sachsen-Anhalt",
-		"address":"Pflugstraße 9a",
-		"city":"10115 Berlin"
-	},
-	15:{
-		"name":"Piratenpartei Schleswig-Holstein",
-		"address":"Pflugstraße 9a",
-		"city":"10115 Berlin"
-	},
-	16:{
-		"name":"Piratenpartei Thüringen",
-		"address":"Pflugstraße 9a",
-		"city":"10115 Berlin"
-	}
-}
-
 function renderPDF() {
 
 	var name= $("#name").val()
 	var memberid= $("#memberid").val()
-	var organisation= $("#organisation").val()
+	var address= $("#address").val()
+	var city = $("#city").val()
 	var reason= $("#reason").val()
 	var valediction= $("#valediction option:selected").val()
 
@@ -196,9 +94,13 @@ function renderPDF() {
 	var doc = new jsPDF();
 	doc.setFontSize(13);
 
-	doc.text(27,  53, organisations[organisation]["name"]);
-	doc.text(27,  61, organisations[organisation]["address"]);
-	doc.text(27,  69, organisations[organisation]["city"]);
+	doc.text(27,  53, "Piratenpartei Deutschland")
+	doc.text(27,  61, "Pflugstraße 9a");
+	doc.text(27,  69,"10115 Berlin");
+
+	doc.text(150,  30, name)
+	doc.text(150,  38, address);
+	doc.text(150,  46,city);
 
 	doc.setFontSize(16);
 	lines = doc.splitTextToSize(text, 180)
@@ -211,5 +113,17 @@ function renderPDF() {
 	doc.output("datauri");
 }
 </script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-40836067-1', 'github.io');
+  ga('send', 'pageview');
+
+</script>
+
 </body>
 </html>
