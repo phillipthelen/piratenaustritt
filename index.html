@@ -17,7 +17,20 @@
 	<script type="text/javascript" src="./js/jspdf.plugin.split_text_to_size.js"></script>
 	<script type="text/javascript" src="./js/jspdf.plugin.standard_fonts_metrics.js"></script>
 	<script type="text/javascript" src="./js/mustache.js"></script>
-	
+	<style>.footer {
+		margin-top:20px;
+	}
+	</style>
+	<script type="text/javascript">
+/* <![CDATA[ */
+    (function() {
+        var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
+        t.parentNode.insertBefore(s, t);
+    })();
+/* ]]> */</script>
 </head>
 
 <body>
@@ -75,7 +88,8 @@
 		<ol>
 			<li>Formular ausfüllen</li>
 			<li>PDF herunterladen</li>
-			<li>ausdrucken</li>
+			<li>Ausdrucken</li>
+			<li>Auf der Linie unterschreiben</li>
 			<li>In Briefumschlag stecken und abschicken</li>
 		</ol>
 	</div>
@@ -83,6 +97,8 @@
 
 <p style="color:#999">Hinweis: Es werden keine Daten gespeichert, das PDF wird lokale per Javascript generiert</p>
 
+
+<div class="footer">Made by <a href="https://twitter.com/viirus42">@viirus42</a>.  <a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://viirus.github.io/piratenaustritt/"></a>
 <script>
 
 function renderPDF() {
