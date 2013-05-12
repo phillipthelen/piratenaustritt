@@ -54,6 +54,31 @@
       </div>
     </div>
 
+<div class="row">
+      <div class="large-12 columns">
+        <label>Gliederung</label>
+        <select id="organisation">
+        	<option value="0">Bund</option>
+        	<option value="1">Baden-Württemberg</option>
+	<option value="2">Bayern</option>
+	<option value="3">Berlin</option>
+	<option value="4">Brandenburg</option>
+	<option value="5">Bremen</option>
+	<option value="6">Hamburg</option>
+	<option value="7">Hessen</option>
+	<option value="8">Mecklenburg-Vorpommern</option>
+	<option value="9">Niedersachsen</option>
+	<option value="10">Nordrhein-Westfalen</option>
+	<option value="11">Rheinland-Pfalz</option>
+	<option value="12">Saarland</option>
+	<option value="13">Sachsen</option>
+	<option value="14">Sachsen-Anhalt</option>
+	<option value="15">Schleswig-Holstein</option>
+	<option value="16">Thüringen</option>
+        </select>
+      </div>
+    </div>
+
     <div class="row">
       <div class="large-12 columns">
         <label>Austrittsgrund</label>
@@ -108,11 +133,117 @@
 
 <div class="footer">Made by <a href="https://twitter.com/viirus42">@viirus42</a>.  <a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://viirus.github.io/piratenaustritt/"></a>
 <script>
+var organisations = {
+	0:{
+		"name":"Piratenpartei Deutschland",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin",
+		"email":"mitglieder@piratenpartei.de"
+	},
+	1:{
+		"name":"Piratenpartei Deutschland",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin",
+		"email":"mitglieder-bw@piratenpartei.de"
+	},
+	2:{
+		"name":"Piratenpartei Deutschland",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin",
+		"email":"mitglieder-by@piratenpartei.de"
+	},
+	3:{
+		"name":"Piratenpartei Deutschland",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin",
+		"email":"mitglieder-be@piratenpartei.de"
+	},
+	4:{
+		"name":"Piratenpartei Deutschland",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin",
+		"email":"mitglieder-bb@piratenpartei.de"
+	},
+	5:{
+		"name":"Piratenpartei Deutschland",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin",
+		"email":"mitglieder-hb@piratenpartei.de"
+	},
+	6:{
+		"name":"Piratenpartei Deutschland",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin",
+		"email":"mitglieder-hh@piratenpartei.de"
+	},
+	7:{
+		"name":"Piratenpartei Deutschland",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin",
+		"email":"mitglieder-he@piratenpartei.de"
+	},
+	8:{
+		"name":"Piratenpartei Deutschland",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin",
+		"email":"mitglieder-mv@piratenpartei.de"
+	},
+	9:{
+		"name":"Piratenpartei Deutschland",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin",
+		"email":"mitglieder-nds@piratenpartei.de"
+	},
+	10:{
+		"name":"Piratenpartei Deutschland",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin",
+		"email":"mitglieder-nrw@piratenpartei.de"
+	},
+	11:{
+		"name":"Piratenpartei Deutschland",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin",
+		"email":"mitglieder-rp@piratenpartei.de"
+	},
+	12:{
+		"name":"Piratenpartei Deutschland",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin",
+		"email":"mitglieder-sl@piratenpartei.de"
+	},
+	13:{
+		"name":"Piratenpartei Deutschland",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin",
+		"email":"mitglieder-sn@piratenpartei.de"
+	},
+	14:{
+		"name":"Piratenpartei Deutschland",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin",
+		"email":"mitglieder-lsa@piratenpartei.de"
+	},
+	15:{
+		"name":"Piratenpartei Deutschland",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin",
+		"email":"mitglieder-sh@piratenpartei.de"
+	},
+	16:{
+		"name":"Piratenpartei Deutschland",
+		"address":"Pflugstraße 9a",
+		"city":"10115 Berlin",
+		"email":"mitglieder-th@piratenpartei.de"
+	}
+}
+
 
 function renderPDF() {
 
 	var name= $("#name").val()
 	var memberid= $("#memberid").val()
+	var organisation= $("#organisation").val()
 	var address= $("#address").val()
 	var city = $("#city").val()
 	var reason= $("#reason").val()
@@ -156,6 +287,7 @@ function renderPDF() {
 function openEmail() {
 	var name= $("#name").val()
 	var memberid= $("#memberid").val()
+	var organisation= $("#organisation").val()
 	var address= $("#address").val()
 	var city = $("#city").val()
 	var reason= $("#reason").val()
@@ -165,13 +297,14 @@ function openEmail() {
 	  name: name,
 	  memberid: memberid,
 	  reason:reason,
-	  valediction:valediction
+	  valediction:valediction,
+	  email:organisations[organisation]["email"]
 	};
 
 	if(memberid != "") {
-		var text = Mustache.render("mailto:mitglieder@piratenpartei.de?subject=Austritt&body=Sehr geehrter Vorstand,%0D%0A%0D%0AHiermit beende ich, {{name}} (Mitgliedsnummer: {{memberid}}) meine Mitgliedschaft bei der Piratenpartei Deutschland. {{reason}}%0D%0A%0D%0A{{valediction}}%0D%0A{{name}}", view);
+		var text = Mustache.render("mailto:{{email}}?subject=Austritt&body=Sehr geehrter Vorstand,%0D%0A%0D%0AHiermit beende ich, {{name}} (Mitgliedsnummer: {{memberid}}) meine Mitgliedschaft bei der Piratenpartei Deutschland. {{reason}}%0D%0A%0D%0A{{valediction}}%0D%0A{{name}}", view);
 	} else {
-		var text = Mustache.render("mailto:mitglieder@piratenpartei.de?subject=Austritt&body=Sehr geehrter Vorstand,%0D%0A%0D%0AHiermit beende ich, {{name}} meine Mitgliedschaft bei der Piratenpartei Deutschland. {{reason}}%0D%0A%0D%0A{{valediction}}%0D%0A{{name}}", view);
+		var text = Mustache.render("mailto:{{email}}?subject=Austritt&body=Sehr geehrter Vorstand,%0D%0A%0D%0AHiermit beende ich, {{name}} meine Mitgliedschaft bei der Piratenpartei Deutschland. {{reason}}%0D%0A%0D%0A{{valediction}}%0D%0A{{name}}", view);
 	}
 	window.location = text;
 }
