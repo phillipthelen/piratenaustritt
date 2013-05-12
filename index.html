@@ -171,7 +171,7 @@ function openEmail() {
 	if(memberid != "") {
 		var text = Mustache.render("mailto:mitglieder@piratenpartei.de?subject=Austritt&body=Sehr geehrter Vorstand,%0D%0A%0D%0AHiermit beende ich, {{name}} (Mitgliedsnummer: {{memberid}}) meine Mitgliedschaft bei der Piratenpartei Deutschland. {{reason}}%0D%0A%0D%0A{{valediction}}%0D%0A{{name}}", view);
 	} else {
-		var text = Mustache.render("mailto:mitglieder@piratenpartei.de?subject=Austritt&body=Sehr geehrter Vorstand,%0D%0AT%0D%0ATHiermit beende ich, {{name}} meine Mitgliedschaft bei der Piratenpartei Deutschland. {{reason}}%0D%0A%0D%0A{{valediction}}%0D%0A{{name}}", view);
+		var text = Mustache.render("mailto:mitglieder@piratenpartei.de?subject=Austritt&body=Sehr geehrter Vorstand,%0D%0A%0D%0AHiermit beende ich, {{name}} meine Mitgliedschaft bei der Piratenpartei Deutschland. {{reason}}%0D%0A%0D%0A{{valediction}}%0D%0A{{name}}", view);
 	}
 	window.location = text;
 }
