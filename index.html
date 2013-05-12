@@ -50,7 +50,7 @@
         <input type="text" placeholder="Straße und Hausnummer" id="address">
       </div>
       <div class="large-6 columns">
-        <input type="text" placeholder="Stadt und Postleitzahl" id="city">
+        <input type="text" placeholder="Postleitzahl und Stadt" id="city">
       </div>
     </div>
 
@@ -82,9 +82,7 @@
 
 <div class="row">
 	<div class="large-6 columns">
-		<a href="javascript:renderPDF()" class="button success">Download</a>
-	</div>
-	<div class="large-6 columns">
+		<a href="javascript:renderPDF()" class="button success">PDF Download</a>
 		<h4>How-To</h4>
 		<ol>
 			<li>Formular ausfüllen</li>
@@ -94,9 +92,18 @@
 			<li>In Briefumschlag stecken und abschicken</li>
 		</ol>
 	</div>
+	<a href="javascript:openEmail()" class="button success">Email öffnen</a>
+	<div class="large-6 columns">
+		<h4>How-To</h4>
+		<ol>
+			<li>Formular ausfüllen</li>
+			<li>Auf "Email öffnen" klicken</li>
+			<li>Im sich, hoffentlich, öffnenden Mailprogramm auf Absenden klicken.</li>
+		</ol>
+	</div>
 </div>
 
-<p style="color:#999">Hinweis: Es werden keine Daten gespeichert, das PDF wird lokale per Javascript generiert</p>
+<p style="color:#999">Hinweis: Es werden keine Daten gespeichert, das PDF wird lokal per Javascript generiert</p>
 
 
 <div class="footer">Made by <a href="https://twitter.com/viirus42">@viirus42</a>.  <a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://viirus.github.io/piratenaustritt/"></a>
@@ -144,6 +151,29 @@ function renderPDF() {
 	doc.text(20, 222, name)
 	ga('send', 'pageview', '/render-pdf');
 	doc.output("datauri");
+}
+
+function openEmail() {
+	var name= $("#name").val()
+	var memberid= $("#memberid").val()
+	var address= $("#address").val()
+	var city = $("#city").val()
+	var reason= $("#reason").val()
+	var valediction= $("#valediction option:selected").val()
+
+		var view = {
+	  name: name,
+	  memberid: memberid,
+	  reason:reason,
+	  valediction:valediction
+	};
+
+	if(memberid != "") {
+		var text = Mustache.render("mailto:mitglieder@piratenpartei.de?subject=Austritt&body=Sehr geehrter Vorstand,%0D%0A%0D%0AHiermit beende ich, {{name}} (Mitgliedsnummer: {{memberid}}) meine Mitgliedschaft bei der Piratenpartei Deutschland. {{reason}}%0D%0A%0D%0A{{valediction}}%0D%0A{{name}}", view);
+	} else {
+		var text = Mustache.render("mailto:mitglieder@piratenpartei.de?subject=Austritt&body=Sehr geehrter Vorstand,%0D%0AT%0D%0ATHiermit beende ich, {{name}} meine Mitgliedschaft bei der Piratenpartei Deutschland. {{reason}}%0D%0A%0D%0A{{valediction}}%0D%0A{{name}}", view);
+	}
+	window.location = text;
 }
 </script>
 
