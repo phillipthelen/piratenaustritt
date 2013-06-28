@@ -264,9 +264,9 @@ function renderPDF() {
 	};
 
 	if(memberid != "") {
-		var text = Mustache.render("Sehr geehrter Vorstand,\n\nHiermit beende ich, {{name}} (Mitgliedsnummer: {{memberid}}) meine Mitgliedschaft bei der Piratenpartei Deutschland. {{reason}}", view);
+		var text = Mustache.render("Sehr geehrter Vorstand,\n\nhiermit beende ich, {{name}} (Mitgliedsnummer: {{memberid}}), meine Mitgliedschaft bei der Piratenpartei Deutschland. {{reason}}", view);
 	} else {
-		var text = Mustache.render("Sehr geehrter Vorstand,\n\nHiermit beende ich, {{name}} meine Mitgliedschaft bei der Piratenpartei Deutschland. {{reason}}", view);
+		var text = Mustache.render("Sehr geehrter Vorstand,\n\nhiermit beende ich, {{name}}, meine Mitgliedschaft bei der Piratenpartei Deutschland. {{reason}}", view);
 	}
 
 	var doc = new jsPDF();
@@ -310,9 +310,9 @@ function openEmail() {
 	};
 
 	if(memberid != "") {
-		var text = Mustache.render("mailto:{{email}}?subject=Austritt&body=Sehr geehrter Vorstand,%0D%0A%0D%0AHiermit beende ich, {{name}} (Mitgliedsnummer: {{memberid}}) meine Mitgliedschaft bei der Piratenpartei Deutschland. {{reason}}%0D%0A%0D%0A{{valediction}}%0D%0A{{name}}", view);
+		var text = Mustache.render("mailto:{{email}}?subject=Austritt&body=Sehr geehrter Vorstand,%0D%0A%0D%0Ahiermit beende ich, {{name}} (Mitgliedsnummer: {{memberid}}), meine Mitgliedschaft bei der Piratenpartei Deutschland. {{reason}}%0D%0A%0D%0A{{valediction}}%0D%0A{{name}}", view);
 	} else {
-		var text = Mustache.render("mailto:{{email}}?subject=Austritt&body=Sehr geehrter Vorstand,%0D%0A%0D%0AHiermit beende ich, {{name}} meine Mitgliedschaft bei der Piratenpartei Deutschland. {{reason}}%0D%0A%0D%0A{{valediction}}%0D%0A{{name}}", view);
+		var text = Mustache.render("mailto:{{email}}?subject=Austritt&body=Sehr geehrter Vorstand,%0D%0A%0D%0Ahiermit beende ich, {{name}}, meine Mitgliedschaft bei der Piratenpartei Deutschland. {{reason}}%0D%0A%0D%0A{{valediction}}%0D%0A{{name}}", view);
 	}
 	window.location = text;
 }
