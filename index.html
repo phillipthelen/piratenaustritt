@@ -105,7 +105,7 @@
 </div>
 
 <div class="row">
-	<div class="large-6 columns">
+	<div class="large-4 columns">
 		<a href="javascript:renderPDF()" class="button success">PDF Download</a>
 		<h4>How-To</h4>
 		<ol>
@@ -116,13 +116,22 @@
 			<li>In Briefumschlag stecken und abschicken</li>
 		</ol>
 	</div>
-	<a href="javascript:openEmail()" class="button success">Email öffnen</a>
-	<div class="large-6 columns">
+	<div class="large-4 columns">
+		<a href="javascript:openEmail()" class="button success">Email öffnen</a>
 		<h4>How-To</h4>
 		<ol>
 			<li>Formular ausfüllen</li>
 			<li>Auf "Email öffnen" klicken</li>
 			<li>Im sich, hoffentlich, öffnenden Mailprogramm auf Absenden klicken.</li>
+		</ol>
+	</div>
+	<div class="large-4 columns">
+		<a href="javascript:generateLink()" class="button success">Link erzeugen</a>
+		<h4>How-To</h4>
+		<ol>
+			<li>Formular ausfüllen</li>
+			<li>Link erzeugen</li>
+			<li>Erzeugten Link weiterverbreiten</li>
 		</ol>
 	</div>
 </div>
@@ -307,6 +316,39 @@ function openEmail() {
 	}
 	window.location = text;
 }
+
+function generateLink() {
+	var linkHash = {
+		name: $("#name").val(),
+		memberid: $("#memberid").val(),
+		organisation: $("#organisation").val(),
+		address: $("#address").val(),
+		city: $("#city").val(),
+		reason: $("#reason").val(),
+		valediction: $("#valediction").val()
+	};
+
+	var url = document.URL;
+	if (url.indexOf("?") > 0) {
+		url = url.substring(0, url.indexOf("?"));
+	}
+
+	alert(url + "?" + btoa(JSON.stringify(linkHash)));
+}
+
+$(function() {
+	if (location.search != "") {
+		var linkHash = JSON.parse(atob(location.search.substring(1)));
+
+		$("#name").val(linkHash.name);
+		$("#memberid").val(linkHash.memberid);
+		$("#organisation").val(linkHash.organisation);
+		$("#address").val(linkHash.address);
+		$("#city").val(linkHash.city);
+		$("#reason").val(linkHash.reason);
+		$("#valediction").val(linkHash.valediction);
+	}
+});
 </script>
 
 <script>
